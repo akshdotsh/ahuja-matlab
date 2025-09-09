@@ -217,49 +217,66 @@ export const algorithmsData = [
     {
       id: 8,
       name: "Experiment 4(a,b): Circular & Linear Convolution",
-      code: `clc; clear; close all;
-  
-  x = input('Enter first sequence x[n] ');
-  h = input('Enter second sequence h[n] ');
-  
-  N = max(length(x), length(h));
-  
-  x_circ = [x, zeros(1, N-length(x))];
-  h_circ = [h, zeros(1, N-length(h))];
-  circ_conv = zeros(1, N);
-  
-  for n = 1:N
-      for k = 1:N
-          m = mod(n-k, N);
-          if m == 0, m = N; end
-          circ_conv(n) = circ_conv(n) + x_circ(k) * h_circ(m);
-      end
-  end
-  
-  disp('Circular Convolution Result:');
-  disp(circ_conv);
-  
-  figure;
-  stem(0:N-1, circ_conv, 'filled');
-  title('Circular Convolution Result');
-  xlabel('n'); ylabel('y_{c}[n]');
-  legend('Akshat Ahuja 102315073'); grid on;
-  
-  M = length(x);
-  L = length(h);
-  N_lin = M + L - 1;
-  
-  x_lin = [x, zeros(1, N_lin-M)];
-  h_lin = [h, zeros(1, N_lin-L)];
-  lin_conv = zeros(1, N_lin);
-  
-  for n = 1:N_lin
-      for k = 1:N_lin
-          m = mod(n-k, N_lin);
-          if m == 0, m = N_lin; end
-          lin_conv(n) = lin_conv(n) + x_lin(k) * h_lin(m);
-      end
-  end`
+      code: `% Aim - Compute circular convolution without using direct command and also
+%        find linear convolution using circular convolution
+
+clc; clear; close all;
+
+x = input('Enter first sequence x[n]  ');
+h = input('Enter second sequence h[n] ');
+
+N = max(length(x), length(h));
+
+x_circ = [x, zeros(1, N-length(x))];
+h_circ = [h, zeros(1, N-length(h))];
+circ_conv = zeros(1, N);
+
+for n = 1:N
+    for k = 1:N
+        m = mod(n-k, N);
+        if m == 0
+            m = N;
+        end
+        circ_conv(n) = circ_conv(n) + x_circ(k) * h_circ(m);
+    end
+end
+
+disp('Circular Convolution Result:');
+disp(circ_conv);
+
+figure;
+stem(0:N-1, circ_conv, 'filled');
+title('Circular Convolution Result');
+xlabel('n'); ylabel('y_c[n]');
+legend('Akshat Ahuja 102135073'); grid on;
+
+L = length(x);
+M = length(h);
+N_lin = L + M - 1;
+
+x_lin = [x, zeros(1, N_lin-L)];
+h_lin = [h, zeros(1, N_lin-M)];
+lin_conv = zeros(1, N_lin);
+
+for n = 1:N_lin
+    for k = 1:N_lin
+        m = mod(n-k, N_lin);
+        if m == 0
+            m = N_lin;
+        end
+        lin_conv(n) = lin_conv(n) + x_lin(k) * h_lin(m);
+    end
+end
+
+disp('Linear Convolution Result (using Circular Convolution):');
+disp(lin_conv);
+
+figure;
+stem(0:N_lin-1, lin_conv, 'filled');
+title('Linear Convolution Result');
+xlabel('n'); ylabel('y_l[n]');
+legend('Akshat Ahuja 102135073'); grid on;
+`
     },
     {
       id: 9,
@@ -314,4 +331,5 @@ export const algorithmsData = [
   legend('Akshat Ahuja 102315073'); grid on;`
     }
   ];
+
   
