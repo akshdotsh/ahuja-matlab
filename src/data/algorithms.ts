@@ -1,335 +1,205 @@
 export const algorithmsData = [
-    {
-      id: 1,
-      name: "1(a) Signum Function",
-      code: `function [x,y] = DAJKS(n1, n2)
-  x = n1:n2;
-  y = (x > 0) - (x < 0);
-  
-  subplot(2,1,1)
-  stem(x, y, 'LineWidth', 1.5);
-  xlabel('Sample-number (n)');
-  ylabel('Amplitude');
-  legend('Akshat Ahuja 102315073');
-  ylim([-3 3]);
-  grid on;
-  
-  subplot(2,1,2)
-  plot(x, y, 'LineWidth', 1.5);
-  xlabel('Time (t)');
-  ylabel('Amplitude');
-  legend('Akshat Ahuja 102315073');
-  ylim([-3 3]);
-  grid on;
-  end`
-    },
-    {
-      id: 2,
-      name: "1(b) Unit Step Signal",
-      code: `function [x,n] = DPGK(n0, n1, n2)
-  n = [n1:n2];
-  x = [(n-n0) >= 0];
-  stem(n,x);
-  title('Unit-step signal in discrete time domain');
-  xlabel('Sample-number(n)');
-  ylabel('Amplitude');
-  legend('Akshat Ahuja 102315073');
-  ylim([-1.5 1.5]);
-  grid on;
-  end`
-    },
-    {
-      id: 3,
-      name: "1(c) Unit Impulse Signal",
-      code: `function [x,n] = DAKK(n0, n1, n2)
-  n = n1:n2;
-  x = (n - n0) == 0;
-  stem(n, x, 'LineWidth',1.5);
-  title('Unit-impulse signal in discrete time domain');
-  xlabel('Sample-number(n)');
-  ylabel('Amplitude');
-  legend('Akshat Ahuja 102315073');
-  ylim([-1.5 1.5]);
-  grid on;
-  end`
-    },
-    {
-      id: 4,
-      name: "1(d) Sine Wave",
-      code: `t = 0:0.001:1;
-  y1 = DAKS(1, 5, 0, t);
-  y2 = DAKS1(0.5, 10, pi/4, t);
-  
-  stem(t, y1, 'r')
-  hold on;
-  stem(t, y2, 'g')
-  xlabel('Sample-number(n)')
-  ylabel('Amplitude')
-  legend('Akshat Ahuja 102315073 - Wave1','Akshat Ahuja 102315073 - Wave2')
-  grid on;
-  
-  function y = DAKS(a,f,p,t)
-  y = a*sin(2*pi*f*t + p);
-  end
-  
-  function y = DAKS1(a1,f1,p1,t)
-  y = a1*sin(2*pi*f1*t + p1);
-  end`
-    },
-    {
-      id: 5,
-      name: "1(e) Square Wave",
-      code: `function [y] = DAJK(UL,f,d)
-  t = 0:0.0001:UL;
-  y = square(2*pi*f*t, d);
-  
-  subplot(2,1,1)
-  stem(t,y,'r')
-  xlabel('Sample-number(n)')
-  ylabel('Amplitude')
-  legend('Akshat Ahuja 102315073')
-  ylim([-1.5 1.5])
-  grid on;
-  
-  subplot(2,1,2)
-  plot(t,y)
-  legend('Akshat Ahuja 102315073')
-  xlabel('Time(t)')
-  ylabel('Amplitude')
-  ylim([-1.5 1.5])
-  grid on;
-  end`
-    },
-    {
-      id: 6,
-      name: "Experiment 2: Linear Convolution",
-      code: `clc
-  clear all;
-  a = input('Enter the sequence 1');
-  b = input('Enter the sequence 2');
-  a1 = length(a);
-  b1 = length(b);
-  a2 = length(b);
-  b2 = length(a);
-  x = [a, zeros(1,a2)];
-  y = [b, zeros(1,a1)];
-  for i = 1:(a1+a2-1)
-      z(i)=0;
-      for i1 = 1:a1
-          if (i-i1+1)>0;
-              z(i) = z(i) + x(i1) * y(i-i1+1);
-          end
-      end
-  end
-  
-  subplot(3,1,1)
-  stem(a,'r')
-  title('First Sequence')
-  xlabel('No of samples')
-  ylabel('Amplitude')
-  
-  subplot(3,1,2)
-  stem(b,'g')
-  title('Second Sequence')
-  xlabel('No of samples')
-  ylabel('Amplitude')
-  ylim([-1.5 1.5]);
-  legend('Akshat Ahuja 102315073')
-  
-  subplot(3,1,3)
-  stem(z)
-  title('Output Sequence')
-  xlabel('No of samples')
-  ylabel('Amplitude')
-  ylim([-1.5 1.5]);
-  legend('Akshat Ahuja 102315073')
-  
-  conv(a,b)`
-    },
-    {
-      id: 7,
-      name: "Experiment 3: DFT and IDFT",
-      code: `clc; clear;
-  
-  x = input('Enter the input sequence x(n) as a row vector: ');
-  N = input('Enter the number of DFT points N: ');
-  
-  L = length(x);
-  if N < L
-      error('N must be greater than or equal to the length of x(n)')
-  end
-  x_padded = [x zeros(1, N - L)];
-  
-  X = zeros(1, N);
-  for k = 0:N-1
-      for n = 0:N-1
-          X(k+1) = X(k+1) + x_padded(n+1) * exp(-j * 2 * pi * k * n / N);
-      end
-  end
-  
-  magX = abs(X);
-  phaseX = angle(X);
-  
-  disp('DFT of the input sequence:');
-  disp(X);
-  
-  figure;
-  sgtitle('DFT Analysis (Manual)', 'FontWeight', 'bold');
-  
-  subplot(2,1,1)
-  stem(0:N-1, magX, 'filled');
-  title('Magnitude Spectrum |X(k)|');
-  xlabel('k'); ylabel('|X(k)|');
-  legend('Akshat Ahuja 102315073')
-  
-  subplot(2,1,2)
-  stem(0:N-1, phaseX, 'filled');
-  title('Phase Spectrum ∠X(k)');
-  xlabel('k'); ylabel('∠X(k) (radians)');
-  legend('Akshat Ahuja 102315073')
-  
-  x_reconstructed = zeros(1, N);
-  for n = 0:N-1
-      for k = 0:N-1
-          x_reconstructed(n+1) = x_reconstructed(n+1) + X(k+1) * exp(j * 2 * pi * k * n / N);
-      end
-      x_reconstructed(n+1) = x_reconstructed(n+1) / N;
-  end
-  
-  disp('Reconstructed sequence using IDFT:');
-  disp(x_reconstructed);
-  
-  figure;
-  sgtitle('Original vs Reconstructed Signal', 'FontWeight', 'bold');
-  
-  subplot(2,1,1)
-  stem(0:L-1, x, 'filled');
-  title('Original Input x(n)');
-  xlabel('n'); ylabel('x(n)');
-  legend('Akshat Ahuja 102315073')
-  
-  subplot(2,1,2)
-  stem(0:L-1, real(x_reconstructed(1:L)), 'filled');
-  title('Reconstructed x(n) from IDFT');
-  xlabel('n'); ylabel('x_{reconstructed}(n)');
-  legend('Akshat Ahuja 102315073')`
-    },
-    {
-      id: 8,
-      name: "Experiment 4(a,b): Circular & Linear Convolution",
-      code: `% Aim - Compute circular convolution without using direct command and also
-%        find linear convolution using circular convolution
+  {
+    id: 1,
+    name: "Experiment 5: Window Functions",
+    code: `% Experiment 5
+clc; clear; close all;
+N = 64;
+n = 0:N-1;
+w_rect = ones(1, N);
+w_ham = 0.54 - 0.46*cos(2*pi*n/(N-1));
+w_hann = 0.5*(1 - cos(2*pi*n/(N-1)));
+w_black = 0.42 - 0.5*cos(2*pi*n/(N-1)) + 0.08*cos(4*pi*n/(N-1));
+nfft = 1024;
 
+[H_rect, f_rect] = freqz(w_rect, 1, nfft, 'whole');
+[H_ham, f_ham ] = freqz(w_ham, 1, nfft, 'whole');
+[H_hann, f_hann] = freqz(w_hann, 1, nfft, 'whole');
+[H_black,f_black] = freqz(w_black,1, nfft, 'whole');
+
+f_rect = f_rect/(2*pi);
+f_ham = f_ham/(2*pi);
+f_hann = f_hann/(2*pi);
+f_black= f_black/(2*pi);
+
+figure;
+subplot(4,2,1); stem(n,w_rect); title('Rectangular Window');
+subplot(4,2,3); stem(n,w_ham); title('Hamming Window');
+subplot(4,2,5); stem(n,w_hann); title('Hanning Window');
+subplot(4,2,7); stem(n,w_black); title('Blackman Window');
+subplot(4,2,2); plot(f_rect-0.5,20*log10(abs(fftshift(H_rect))/max(abs(H_rect)))));
+subplot(4,2,4); plot(f_ham-0.5,20*log10(abs(fftshift(H_ham))/max(abs(H_ham)))));
+subplot(4,2,6); plot(f_hann-0.5,20*log10(abs(fftshift(H_hann))/max(abs(H_hann)))));
+subplot(4,2,8); plot(f_black-0.5,20*log10(abs(fftshift(H_black))/max(abs(H_black)))));`
+  },
+
+  {
+    id: 2,
+    name: "Experiment 6: FIR Low-pass Using Rectangular & Triangular Windows",
+    code: `% Experiment 6
+clc; clear all; close all;
+fp = input('FP: ');
+df = input('DF: ');
+fs = input('FS: ');
+wp = 2*pi*fp/fs;
+ws = 2*pi*(fp+df)/fs;
+wc = (wp+ws)/2;
+
+M_rect = ceil(0.9*fs/df);
+M_tri = ceil(3.1*fs/df);
+N_rect = M_rect+1;
+N_tri = M_tri+1;
+
+n_rect = 0:N_rect-1;
+hd_rect = zeros(1,N_rect);
+for n=1:N_rect
+ if (n-1)==M_rect/2, hd_rect(n)=wc/pi;
+ else hd_rect(n)=sin(wc*((n-1)-M_rect/2))/(pi*((n-1)-M_rect/2));
+ end
+end
+
+n_tri = 0:N_tri-1;
+hd_tri = zeros(1,N_tri);
+for n=1:N_tri
+ if (n-1)==M_tri/2, hd_tri(n)=wc/pi;
+ else hd_tri(n)=sin(wc*((n-1)-M_tri/2))/(pi*((n-1)-M_tri/2));
+ end
+end
+
+w_rect = rectwin(N_rect)';
+w_tri = triang(N_tri)';
+h_rect = hd_rect.*w_rect;
+h_tri = hd_tri.*w_tri;
+
+[H_rect,w1]=freqz(h_rect,1,1024);
+[H_tri,w2]=freqz(h_tri,1,1024);
+
+figure;
+subplot(2,2,1); stem(n_rect,h_rect);
+subplot(2,2,2); plot(w1/pi,20*log10(abs(H_rect)));
+subplot(2,2,3); stem(n_tri,h_tri);
+subplot(2,2,4); plot(w2/pi,20*log10(abs(H_tri)));`
+  },
+
+  {
+    id: 3,
+    name: "Experiment 7: FIR High-pass Filter Using Hamming & Hanning",
+    code: `% Experiment 7
+clc; clear; close all;
+fp = input('FP: ');
+fsb = input('FSB: ');
+Fs = input('FS: ');
+
+wp = 2*pi*fp/Fs;
+ws = 2*pi*fsb/Fs;
+wc = (wp+ws)/2;
+dw = abs(ws-wp);
+
+M = ceil(8*pi/dw)+1;
+n = 0:M-1;
+alpha = (M-1)/2;
+
+hd = -sin(wc*(n-alpha))./(pi*(n-alpha));
+center_index = round(alpha+1);
+hd(center_index)=1-(wc/pi);
+
+Wham = hamming(M)';
+Whann = hann(M)';
+
+h_ham = hd.*Wham;
+h_hann = hd.*Whann;
+
+[H_ham,w]=freqz(h_ham,1,1024);
+[H_hann,w2]=freqz(h_hann,1,1024);`
+  },
+
+  {
+    id: 4,
+    name: "Experiment 8: FIR Bandpass Using Kaiser Window",
+    code: `% Experiment 8
 clc; clear; close all;
 
-x = input('Enter first sequence x[n]  ');
-h = input('Enter second sequence h[n] ');
+fp1=input('fp1: '); fp2=input('fp2: ');
+fs=input('fs: '); df=input('df: ');
+Rp=input('Rp: '); As=input('As: ');
 
-N = max(length(x), length(h));
+Wp1=fp1/(fs/2); Wp2=fp2/(fs/2);
+Ws1=(fp1-df)/(fs/2); Ws2=(fp2+df)/(fs/2);
 
-x_circ = [x, zeros(1, N-length(x))];
-h_circ = [h, zeros(1, N-length(h))];
-circ_conv = zeros(1, N);
+delta_p=(10^(Rp/20)-1)/(10^(Rp/20)+1);
+delta_s=10^(-As/20);
+delta=min(delta_p,delta_s);
+A=-20*log10(delta);
 
-for n = 1:N
-    for k = 1:N
-        m = mod(n-k, N);
-        if m == 0
-            m = N;
-        end
-        circ_conv(n) = circ_conv(n) + x_circ(k) * h_circ(m);
-    end
+if A<21, beta=0;
+elseif A<=50, beta=0.5842*(A-21)^0.4+0.07886*(A-21);
+else beta=0.1102*(A-8.7);
 end
 
-disp('Circular Convolution Result:');
-disp(circ_conv);
+dfN=df/(fs/2);
+N=ceil((A-8)/(2.285*2*pi*dfN));
+if mod(N,2)~=0, N=N+1; end
 
-figure;
-stem(0:N-1, circ_conv, 'filled');
-title('Circular Convolution Result');
-xlabel('n'); ylabel('y_c[n]');
-legend('Akshat Ahuja 102135073'); grid on;
+Wn=[Wp1 Wp2];
+b=fir1(N,Wn,'bandpass',kaiser(N+1,beta),'scale');`
+  },
 
-L = length(x);
-M = length(h);
-N_lin = L + M - 1;
+  {
+    id: 5,
+    name: "Experiment 9: Butterworth LPF (Impulse Invariant)",
+    code: `% Experiment 9
+clc; clear; close all;
 
-x_lin = [x, zeros(1, N_lin-L)];
-h_lin = [h, zeros(1, N_lin-M)];
-lin_conv = zeros(1, N_lin);
+fp=input('fp: '); 
+fs=input('fs: ');
+Ap=input('Ap: '); 
+As=input('As: ');
+Fs=input('Fs: ');
 
-for n = 1:N_lin
-    for k = 1:N_lin
-        m = mod(n-k, N_lin);
-        if m == 0
-            m = N_lin;
-        end
-        lin_conv(n) = lin_conv(n) + x_lin(k) * h_lin(m);
-    end
-end
+Wp=2*pi*fp; 
+Ws=2*pi*fs;
 
-disp('Linear Convolution Result (using Circular Convolution):');
-disp(lin_conv);
+n=log10((10^(As/10)-1)/(10^(Ap/10)-1))/(2*log10(Ws/Wp));
+n=ceil(n);
 
-figure;
-stem(0:N_lin-1, lin_conv, 'filled');
-title('Linear Convolution Result');
-xlabel('n'); ylabel('y_l[n]');
-legend('Akshat Ahuja 102135073'); grid on;
-`
-    },
-    {
-      id: 9,
-      name: "Experiment 4(c): Circular Convolution from Linear Convolution",
-      code: `clc; clear; close all;
-  
-  x = input('Enter first sequence x[n] ');
-  h = input('Enter second sequence h[n] ');
-  
-  N = max(length(x), length(h));
-  
-  lin_full = conv(x, h);
-  circ_conv = zeros(1, N);
-  
-  for i = 1:length(lin_full)
-      idx = mod(i-1, N) + 1;
-      circ_conv(idx) = circ_conv(idx) + lin_full(i);
-  end
-  
-  disp('Circular Convolution (from Linear Convolution):');
-  disp(circ_conv);
-  
-  stem(0:N-1, circ_conv, 'filled');
-  title('Circular Convolution using Linear Convolution');
-  xlabel('n'); ylabel('y_c[n]');
-  legend('Akshat Ahuja 102315073'); grid on;`
-    },
-    {
-      id: 10,
-      name: "Experiment 4(d): Circular Convolution using DFT-IDFT",
-      code: `clc; clear; close all;
-  
-  x = input('Enter first sequence x[n]: ');
-  h = input('Enter second sequence h[n]: ');
-  
-  N = max(length(x), length(h));
-  
-  x_circ = [x, zeros(1, N-length(x))];
-  h_circ = [h, zeros(1, N-length(h))];
-  
-  X = fft(x_circ, N);
-  H = fft(h_circ, N);
-  Y = X .* H;
-  circ_conv = ifft(Y);
-  
-  disp('Circular Convolution (DFT-IDFT):');
-  disp(circ_conv);
-  
-  stem(0:N-1, real(circ_conv), 'filled');
-  title('Circular Convolution using DFT-IDFT');
-  xlabel('n'); ylabel('y_c[n]');
-  legend('Akshat Ahuja 102315073'); grid on;`
-    }
-  ];
+Wc=Wp/((10^(Ap/10)-1)^(1/(2*n)));
 
-  
+[ba,aa]=butter(n,Wc,'s');
+[bz,az]=impinvar(ba,aa,Fs);`
+  },
+
+  {
+    id: 6,
+    name: "Experiment 10A: Downsampling",
+    code: `% Experiment 10A
+N=51; n=0:N-1;
+N_F1=input('F1: ');
+x1=sin(2*pi*N_F1*n);
+
+N_F2=input('F2: '); 
+N_F3=input('F3: ');
+x2=sin(2*pi*N_F2*n)+sin(2*pi*N_F3*n);
+
+M=input('M: ');
+y1=downsample(x1,M);
+y2=downsample(x2,M);`
+  },
+
+  {
+    id: 7,
+    name: "Experiment 10B: Upsampling",
+    code: `% Experiment 10B
+N=51; n=0:N-1;
+
+N_F1=input('F1: ');
+x1=sin(2*pi*N_F1*n);
+
+N_F2=input('F2: '); 
+N_F3=input('F3: ');
+x2=sin(2*pi*N_F2*n)+sin(2*pi*N_F3*n);
+
+M=input('M: ');
+y1=upsample(x1,M);
+y2=upsample(x2,M);`
+  }
+];
