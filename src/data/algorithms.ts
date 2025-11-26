@@ -1,14 +1,14 @@
 export const algorithmsData = [
-  // ------------------ EXPERIMENT 1 ------------------
+
+  // ---------------- EXPERIMENT 1 ----------------
 
   {
-    id: "1A",
+    id: 1,
     name: "Experiment 1A: Signum Function",
     code: `% Experiment 1A
 clc; clear; close all;
 n = -10:10;
 x = (n>0) - (n<0);
-
 stem(n,x,'LineWidth',1.5);
 xlabel('n'); ylabel('Amplitude');
 title('Signum Function');
@@ -16,13 +16,12 @@ grid on;`
   },
 
   {
-    id: "1B",
+    id: 2,
     name: "Experiment 1B: Unit Step Signal",
     code: `% Experiment 1B
 clc; clear; close all;
 n = -10:10;
 x = (n>=0);
-
 stem(n,x,'LineWidth',1.5);
 xlabel('n'); ylabel('Amplitude');
 title('Unit Step Signal');
@@ -30,13 +29,12 @@ grid on;`
   },
 
   {
-    id: "1C",
+    id: 3,
     name: "Experiment 1C: Unit Impulse Signal",
     code: `% Experiment 1C
 clc; clear; close all;
 n = -10:10;
 x = (n==0);
-
 stem(n,x,'LineWidth',1.5);
 xlabel('n'); ylabel('Amplitude');
 title('Unit Impulse Signal');
@@ -44,13 +42,12 @@ grid on;`
   },
 
   {
-    id: "1D",
+    id: 4,
     name: "Experiment 1D: Sine Wave",
     code: `% Experiment 1D
 clc; clear; close all;
 t = 0:0.001:1;
 x = sin(2*pi*5*t);
-
 plot(t,x,'LineWidth',1.5);
 xlabel('t'); ylabel('Amplitude');
 title('Sine Wave (5 Hz)');
@@ -58,160 +55,136 @@ grid on;`
   },
 
   {
-    id: "1E",
+    id: 5,
     name: "Experiment 1E: Square Wave",
     code: `% Experiment 1E
 clc; clear; close all;
 t = 0:0.001:1;
 x = square(2*pi*5*t);
-
 plot(t,x,'LineWidth',1.5);
 xlabel('t'); ylabel('Amplitude');
 title('Square Wave (5 Hz)');
 grid on;`
   },
 
-  // ------------------ EXPERIMENT 2 ------------------
+  // ---------------- EXPERIMENT 2 ----------------
 
   {
-    id: "2",
+    id: 6,
     name: "Experiment 2: Linear Convolution",
     code: `% Experiment 2
 clc; clear; close all;
-
 a = input('Enter sequence 1: ');
 b = input('Enter sequence 2: ');
-
 N1 = length(a);
 N2 = length(b);
-
 x = [a zeros(1,N2)];
 y = [b zeros(1,N1)];
-
 for i = 1:N1+N2-1
-    z(i)=0;
-    for j = 1:N1
-        if (i-j+1)>0
-            z(i) = z(i) + x(j)*y(i-j+1);
-        end
-    end
+ z(i)=0;
+ for j = 1:N1
+ if (i-j+1)>0
+ z(i) = z(i) + x(j)*y(i-j+1);
+ end
+ end
 end
-
 figure;
 subplot(3,1,1); stem(a); title('Sequence 1');
 subplot(3,1,2); stem(b); title('Sequence 2');
 subplot(3,1,3); stem(z); title('Linear Convolution Output');`
   },
 
-  // ------------------ EXPERIMENT 3 ------------------
+  // ---------------- EXPERIMENT 3 ----------------
 
   {
-    id: "3",
+    id: 7,
     name: "Experiment 3: DFT & IDFT",
     code: `% Experiment 3
 clc; clear; close all;
-
 x = input('Enter input sequence: ');
 N = input('Enter DFT length: ');
-
 L = length(x);
 x = [x zeros(1,N-L)];
-
 X = zeros(1,N);
 for k = 0:N-1
-    for n = 0:N-1
-        X(k+1) = X(k+1) + x(n+1)*exp(-1j*2*pi*k*n/N);
-    end
+ for n = 0:N-1
+ X(k+1) = X(k+1) + x(n+1)*exp(-1j*2*pi*k*n/N);
+ end
 end
-
 x_rec = zeros(1,N);
 for n = 0:N-1
-    for k = 0:N-1
-        x_rec(n+1) = x_rec(n+1) + (1/N)*X(k+1)*exp(1j*2*pi*k*n/N);
-    end
+ for k = 0:N-1
+ x_rec(n+1) = x_rec(n+1) + (1/N)*X(k+1)*exp(1j*2*pi*k*n/N);
+ end
 end
-
 figure;
 subplot(3,1,1); stem(abs(X)); title('Magnitude');
 subplot(3,1,2); stem(angle(X)); title('Phase');
 subplot(3,1,3); stem(real(x_rec)); title('Reconstructed Signal');`
   },
 
-  // ------------------ EXPERIMENT 4 ------------------
+  // ---------------- EXPERIMENT 4 ----------------
 
   {
-    id: "4A",
+    id: 8,
     name: "Experiment 4A: Circular Convolution (Manual)",
     code: `% Experiment 4A
 clc; clear; close all;
-
 x = input('Enter x[n]: ');
 h = input('Enter h[n]: ');
-
 N = max(length(x), length(h));
 x1 = [x zeros(1,N-length(x))];
 h1 = [h zeros(1,N-length(h))];
-
 y = zeros(1,N);
 for n = 0:N-1
-    for m = 0:N-1
-        y(n+1) = y(n+1) + x1(m+1)*h1(mod(n-m,N)+1);
-    end
+ for m = 0:N-1
+ y(n+1) = y(n+1) + x1(m+1)*h1(mod(n-m,N)+1);
+ end
 end
-
 stem(0:N-1,y); title('Circular Convolution'); grid on;`
   },
 
   {
-    id: "4B",
-    name: "Experiment 4B: Linear Convolution using Circular Method",
+    id: 9,
+    name: "Experiment 4B: Linear Convolution via Circular",
     code: `% Experiment 4B
 clc; clear; close all;
-
 x = input('Enter x[n]: ');
 h = input('Enter h[n]: ');
-
 L = length(x)+length(h)-1;
 x1 = [x zeros(1,L-length(x))];
 h1 = [h zeros(1,L-length(h))];
-
 y = zeros(1,L);
 for n = 1:L
-    for m = 1:L
-        k = mod(n-m,L);
-        y(n) = y(n) + x1(m)*h1(k+1);
-    end
+ for m = 1:L
+ k = mod(n-m,L);
+ y(n) = y(n) + x1(m)*h1(k+1);
+ end
 end
-
 stem(0:L-1,y); title('Linear Conv via Circular'); grid on;`
   },
 
   {
-    id: "4C",
-    name: "Experiment 4C: Circular Convolution using DFT-IDFT",
+    id: 10,
+    name: "Experiment 4C: Circular Convolution via DFT-IDFT",
     code: `% Experiment 4C
 clc; clear; close all;
-
 x = input('Enter x[n]: ');
 h = input('Enter h[n]: ');
-
 N = max(length(x),length(h));
 x1 = [x zeros(1,N-length(x))];
 h1 = [h zeros(1,N-length(h))];
-
 X = fft(x1,N);
 H = fft(h1,N);
 Y = X .* H;
-
 y = ifft(Y);
-
 stem(0:N-1,real(y)); title('Circular Conv via DFT-IDFT'); grid on;`
   },
 
-  // ------------------ EXPERIMENT 5 - 10 (YOUR ORIGINALS) ------------------
+  // ---------------- EXPERIMENT 5 ----------------
 
   {
-    id: 5,
+    id: 11,
     name: "Experiment 5: Window Functions",
     code: `% Experiment 5
 clc; clear; close all;
@@ -244,8 +217,10 @@ subplot(4,2,6); plot(f_hann-0.5,20*log10(abs(fftshift(H_hann))/max(abs(H_hann)))
 subplot(4,2,8); plot(f_black-0.5,20*log10(abs(fftshift(H_black))/max(abs(H_black)))));`
   },
 
+  // ---------------- EXPERIMENT 6 ----------------
+
   {
-    id: 6,
+    id: 12,
     name: "Experiment 6: FIR Low-pass Using Rectangular & Triangular Windows",
     code: `% Experiment 6
 clc; clear all; close all;
@@ -292,8 +267,10 @@ subplot(2,2,3); stem(n_tri,h_tri);
 subplot(2,2,4); plot(w2/pi,20*log10(abs(H_tri)));`
   },
 
+  // ---------------- EXPERIMENT 7 ----------------
+
   {
-    id: 7,
+    id: 13,
     name: "Experiment 7: FIR High-pass Filter Using Hamming & Hanning",
     code: `% Experiment 7
 clc; clear; close all;
@@ -324,8 +301,10 @@ h_hann = hd.*Whann;
 [H_hann,w2]=freqz(h_hann,1,1024);`
   },
 
+  // ---------------- EXPERIMENT 8 ----------------
+
   {
-    id: 8,
+    id: 14,
     name: "Experiment 8: FIR Bandpass Using Kaiser Window",
     code: `% Experiment 8
 clc; clear; close all;
@@ -355,8 +334,10 @@ Wn=[Wp1 Wp2];
 b=fir1(N,Wn,'bandpass',kaiser(N+1,beta),'scale');`
   },
 
+  // ---------------- EXPERIMENT 9 ----------------
+
   {
-    id: 9,
+    id: 15,
     name: "Experiment 9: Butterworth LPF (Impulse Invariant)",
     code: `% Experiment 9
 clc; clear; close all;
@@ -379,8 +360,10 @@ Wc=Wp/((10^(Ap/10)-1)^(1/(2*n)));
 [bz,az]=impinvar(ba,aa,Fs);`
   },
 
+  // ---------------- EXPERIMENT 10A ----------------
+
   {
-    id: 10,
+    id: 16,
     name: "Experiment 10A: Downsampling",
     code: `% Experiment 10A
 N=51; n=0:N-1;
@@ -396,8 +379,10 @@ y1=downsample(x1,M);
 y2=downsample(x2,M);`
   },
 
+  // ---------------- EXPERIMENT 10B ----------------
+
   {
-    id: 11,
+    id: 17,
     name: "Experiment 10B: Upsampling",
     code: `% Experiment 10B
 N=51; n=0:N-1;
@@ -413,4 +398,5 @@ M=input('M: ');
 y1=upsample(x1,M);
 y2=upsample(x2,M);`
   }
+
 ];
