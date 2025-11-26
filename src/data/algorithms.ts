@@ -166,8 +166,33 @@ stem(0:L-1,y); title('Linear Conv via Circular'); grid on;`
 
   {
     id: 10,
-    name: "Experiment 4C: Circular Convolution via DFT-IDFT",
+    name: "Experiment 4C: Circular Convolution Using Linear Convolution Method",
     code: `% Experiment 4C
+clc; clear; close all;
+
+x = input('Enter first sequence x[n]: ');
+h = input('Enter second sequence h[n]: ');
+
+N = max(length(x), length(h));
+lin_full = conv(x, h);
+
+circ_conv = zeros(1, N);
+
+for i = 1:length(lin_full)
+    idx = mod(i-1, N) + 1;
+    circ_conv(idx) = circ_conv(idx) + lin_full(i);
+end
+
+stem(0:N-1, circ_conv, 'LineWidth', 1.5);
+xlabel('n'); ylabel('Amplitude');
+title('Circular Convolution using Linear Convolution Method');
+grid on;`
+  },
+
+  {
+    id: 11,
+    name: "Experiment 4D: Circular Convolution via DFT-IDFT",
+    code: `% Experiment 4D
 clc; clear; close all;
 x = input('Enter x[n]: ');
 h = input('Enter h[n]: ');
@@ -184,7 +209,7 @@ stem(0:N-1,real(y)); title('Circular Conv via DFT-IDFT'); grid on;`
   // ---------------- EXPERIMENT 5 ----------------
 
   {
-    id: 11,
+    id: 12,
     name: "Experiment 5: Window Functions",
     code: `% Experiment 5
 clc; clear; close all;
@@ -220,7 +245,7 @@ subplot(4,2,8); plot(f_black-0.5,20*log10(abs(fftshift(H_black))/max(abs(H_black
   // ---------------- EXPERIMENT 6 ----------------
 
   {
-    id: 12,
+    id: 13,
     name: "Experiment 6: FIR Low-pass Using Rectangular & Triangular Windows",
     code: `% Experiment 6
 clc; clear all; close all;
@@ -270,7 +295,7 @@ subplot(2,2,4); plot(w2/pi,20*log10(abs(H_tri)));`
   // ---------------- EXPERIMENT 7 ----------------
 
   {
-    id: 13,
+    id: 14,
     name: "Experiment 7: FIR High-pass Filter Using Hamming & Hanning",
     code: `% Experiment 7
 clc; clear; close all;
@@ -304,7 +329,7 @@ h_hann = hd.*Whann;
   // ---------------- EXPERIMENT 8 ----------------
 
   {
-    id: 14,
+    id: 15,
     name: "Experiment 8: FIR Bandpass Using Kaiser Window",
     code: `% Experiment 8
 clc; clear; close all;
@@ -337,7 +362,7 @@ b=fir1(N,Wn,'bandpass',kaiser(N+1,beta),'scale');`
   // ---------------- EXPERIMENT 9 ----------------
 
   {
-    id: 15,
+    id: 16,
     name: "Experiment 9: Butterworth LPF (Impulse Invariant)",
     code: `% Experiment 9
 clc; clear; close all;
@@ -363,7 +388,7 @@ Wc=Wp/((10^(Ap/10)-1)^(1/(2*n)));
   // ---------------- EXPERIMENT 10A ----------------
 
   {
-    id: 16,
+    id: 17,
     name: "Experiment 10A: Downsampling",
     code: `% Experiment 10A
 N=51; n=0:N-1;
@@ -382,7 +407,7 @@ y2=downsample(x2,M);`
   // ---------------- EXPERIMENT 10B ----------------
 
   {
-    id: 17,
+    id: 18,
     name: "Experiment 10B: Upsampling",
     code: `% Experiment 10B
 N=51; n=0:N-1;
